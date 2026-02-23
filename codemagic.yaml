@@ -4,14 +4,15 @@ workflows:
     environment:
       flutter: stable
       xcode: latest
+      cocoapods: default
     scripts:
-      - flutter --version
       - flutter pub get
-      - cd ios
-      - pod repo update
-      - pod install
-      - cd ..
       - flutter clean
+      - cd ios
+      - rm -rf Pods Podfile.lock
+      - pod repo update
+      - pod install --verbose
+      - cd ..
       - flutter build ipa --release
     artifacts:
       - build/ios/ipa/*.ipa
