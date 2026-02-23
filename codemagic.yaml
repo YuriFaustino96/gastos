@@ -1,14 +1,17 @@
 workflows:
-  ios-adhoc:
-    name: iOS AdHoc (IPA)
+  ios-workflow:
+    name: iOS Workflow
     environment:
       flutter: stable
       xcode: latest
-      ios_signing:
-        distribution_type: ad_hoc
-        bundle_identifier: com.seu.bundleid.aqui
+      cocoapods: default
     scripts:
       - flutter pub get
+      - flutter clean
+      - cd ios
+      - rm -rf Pods Podfile.lock
+      - pod repo update
+      - cd ..
       - flutter build ipa --release
     artifacts:
       - build/ios/ipa/*.ipa
